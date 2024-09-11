@@ -7,14 +7,14 @@ public class VehicleTest {
     public static void main(String[] args) {
         Car regularCar = new Car();
         regularCar.setSpeed(100.0);
-        regularCar.setFuelLevel(80.0f);
+        regularCar.setFuelLevel(88.0f);
 
         ElectricCar electricCar = new ElectricCar();
-        electricCar.setSpeed(90.0);
-        electricCar.setFuelLevel(75.0f);
+        electricCar.setSpeed(70.0);
+        electricCar.setFuelLevel(84.0f);
         electricCar.setBatteryLevel(90.0);
 
-        int distanceDriven = 15000;
+        int distanceDriven = 25000;
         regularCar.drive(distanceDriven);
         electricCar.drive(distanceDriven);
 
