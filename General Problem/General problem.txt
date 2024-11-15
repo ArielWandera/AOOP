@@ -1,0 +1,473 @@
+
+
+public class TR {
+    public double tax = 0;
+    public double CIF;
+    public double year;
+
+    public TR(double CIF, double year) {
+        this.CIF = CIF;
+        this.year=year;
+    }
+
+
+
+    public void payTax(){
+        System.out.println("TAXES ARE:");
+    }
+
+    public void getID(){
+        double id= CIF * 0.25 ;
+        System.out.println("Import Duty: "+id);
+        tax+=id;
+
+    }
+    public void getVAT(){
+        double vat = CIF * 0.18 ;
+        System.out.println("Value Added Tax: "+vat);
+        tax+=vat;
+    }
+    public void getWHT(){
+        double wht = CIF *0.06;
+        System.out.println("Withholding tax: " +wht);
+        tax+=wht;
+    }
+    public void getIL(){
+        System.out.println("Infrastructure Levy: 150000");
+        double il = 150000;
+        tax+=il;
+    }
+    public void getSD(){
+        System.out.println("Stamp Duty: 35000");
+        double il = 35000;
+        tax+=il;
+    }
+        public void getFF(){
+            System.out.println("Form fees: 20000");
+            double il = 20000;
+            tax+=il;
+        }
+        public void getED(){
+            System.out.println("Excise Duty: 200000");
+            double il = 200000;
+            tax+=il;
+        }
+        public void Registration(String type){
+            if (type == "A") {
+                double a=300000;
+                System.out.println("Registration: 300000");
+                tax+=a;
+            } else if (type== "B"){
+                double a=700000;
+                System.out.println("Registration: 700000");
+                tax+=a;
+
+            }
+            if (type == null) {
+            }
+
+        }
+
+}
+public abstract class Vehicles extends TR{
+    public double seatingCapacity;
+    public double grossWeight;
+    public double engineCapacity;
+    public double year;
+
+    public Vehicles(double CIF, double seatingCapacity, double grossWeight, double engineCapacity, double year) {
+        super(CIF,year);
+        this.seatingCapacity = seatingCapacity;
+        this.grossWeight = grossWeight;
+        this.engineCapacity = engineCapacity;
+
+    }
+    public void bond(double days){
+        double a=days * 15000;
+        tax+=a;
+    }
+    public void transportation(double x){
+        if(x==1){
+            double a=CIF *0.005;
+            tax+=a;
+        }else if(x==2){
+            double a=CIF *0.015;
+            tax+=a;
+        }
+    }
+
+
+    public abstract void payTax(Vehicles obj);
+}
+public class Ambulance extends Vehicles {
+    public Ambulance(double CIF, double seatingCapacity, double grossWeight, double engineCapacity, double year) {
+        super(CIF, seatingCapacity, grossWeight, engineCapacity, year);
+
+
+    }
+
+
+    public void payTax(Vehicles obj) {
+        System.out.println("Ambulance");
+        double age = 2024-year;
+        obj.getSD();
+        obj.getFF();
+        obj.getED();
+        obj.Registration("A");
+        if(age>10){
+            double il = CIF *0.15;
+            System.out.println("Infrastructure Levy:"+il);
+            tax+=il;
+
+        }else{
+            obj.getIL();
+
+        }
+        System.out.println("Total:"+tax);
+        System.out.println();
+
+
+    }
+}
+public class Estate extends Vehicles{
+    public String plate;
+
+    public Estate(double CIF, double seatingCapacity, double grossWeight, double engineCapacity, double year, String plate ) {
+        super(CIF, seatingCapacity, grossWeight, engineCapacity, year);
+        this.plate = plate;
+
+
+    }
+
+
+    @Override
+    public void payTax(Vehicles obj) {
+        System.out.println("Estate");
+        super.payTax();
+        double age= 2024-year;
+        obj.getID();
+        obj.getVAT();
+        obj.getWHT();
+        obj.getIL();
+        obj.getSD();
+        obj.getFF();
+        obj.getED();
+        obj.Registration(plate);
+        if(seatingCapacity>5){
+            double a =((seatingCapacity-5)*250000);
+            System.out.println("Seating tax: "+a);
+            tax+=a;
+        }
+        if(grossWeight>1500 && grossWeight<2000){
+            double a =CIF * 0.05;
+            System.out.println("Weight tax: "+a);
+            tax+=a;
+
+
+        } else if (grossWeight>2000) {
+            double a =CIF * 0.1;
+            System.out.println("Weight tax: "+a);
+            tax+=a;
+
+        }else if(grossWeight<1500){
+            double a = CIF *0.02;
+            System.out.println("Weight tax: "+a);
+            tax+=a;
+
+        }if(engineCapacity>1800){
+            double a = CIF *0.05;
+            System.out.println("Engine capacity: "+a);
+            tax+=a;
+        }else if(engineCapacity<1800) {
+            double a = CIF * 0.025;
+            System.out.println("Engine capacity: " + a);
+            tax += a;
+        }
+        if(age>1&& age<5){
+            double a = CIF *0.01;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }else if(age>5&& age<10){
+            double a = CIF *0.05;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }else if(age>10){
+            double a = CIF *0.15;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }
+        System.out.println("Total:"+tax);
+        System.out.println();
+
+
+
+    }
+}
+public class Sedan extends Vehicles{
+    public Sedan(double CIF, double seatingCapacity, double grossWeight, double engineCapacity, double year) {
+        super(CIF, seatingCapacity, grossWeight, engineCapacity, year);
+    }
+
+    @Override
+    public void payTax(Vehicles obj) {
+        System.out.println("Sedan");
+        double age = 2024 - year;
+
+        super.payTax();
+
+
+            obj.getID();
+            obj.getVAT();
+            obj.getWHT();
+            obj.getIL();
+            obj.getSD();
+            obj.getFF();
+            obj.getED();
+            obj.Registration("B");
+
+            if (grossWeight > 1500 && grossWeight < 2000) {
+                double a = CIF * 0.1;
+                System.out.println("Weight tax: " + a);
+                tax += a;
+
+
+            } else if (grossWeight > 2000) {
+                double a = CIF * 0.15;
+                System.out.println("Weight tax: " + a);
+                tax += a;
+
+            } else if (grossWeight < 1500) {
+                double a = CIF * 0.02;
+                System.out.println("Weight tax: " + a);
+                tax += a;
+
+            }
+            if (engineCapacity > 2000) {
+                double a = CIF * 0.1;
+                System.out.println("Engine capacity: " + a);
+                tax += a;
+            } else if (engineCapacity < 1500) {
+                double a = CIF * 0.025;
+                System.out.println("Engine capacity: " + a);
+                tax += a;
+            }
+
+
+            if (age > 10 && age < 15) {
+                double a = CIF * 0.01;
+                System.out.println("Add ons for Infrastructure Levy: " + a);
+                tax += a;
+
+            } else if (age > 5 && age < 10) {
+                double a = CIF * 0.05;
+                System.out.println("Add ons for Infrastructure Levy: " + a);
+                tax += a;
+
+            } else if (age < 5) {
+                double a = CIF * 0.015;
+                System.out.println("Add ons for Infrastructure Levy: " + a);
+                tax += a;
+
+            }
+        System.out.println("Total:"+tax);
+        System.out.println();
+
+
+
+
+    }
+}
+public class SUV extends Vehicles{
+    public SUV(double CIF, double seatingCapacity, double grossWeight, double engineCapacity, double year) {
+        super(CIF, seatingCapacity, grossWeight, engineCapacity, year);
+    }
+
+    @Override
+    public void payTax(Vehicles obj) {
+        System.out.println("SUV");
+        super.payTax();
+        double age= 2024-year;
+        obj.getID();
+        obj.getVAT();
+        obj.getWHT();
+        obj.getIL();
+        obj.getSD();
+        obj.getFF();
+        obj.getED();
+        obj.Registration("A");
+        if(seatingCapacity>5){
+            double a =((seatingCapacity-5)*350000);
+            System.out.println("Seating tax: "+a);
+            tax+=a;
+        }
+
+
+
+         if (grossWeight>5000) {
+            double a =CIF * 0.15;
+            System.out.println("Weight tax: "+a);
+            tax+=a;
+
+        }
+
+        if(age>1&& age<5){
+            double a = CIF *0.01;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }else if(age>5&& age<10){
+            double a = CIF *0.15;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }else if(age>10){
+            double a = CIF *0.25;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }
+        System.out.println("Total:"+tax);
+        System.out.println();
+
+
+
+    }
+}
+public class Trailer extends Vehicles{
+    public String plate;
+    public Trailer(double CIF, double seatingCapacity, double grossWeight, double engineCapacity, double year, String plate) {
+        super(CIF, seatingCapacity, grossWeight, engineCapacity, year);
+        this.plate=plate;
+    }
+    @Override
+    public void payTax(Vehicles obj) {
+        System.out.println("Trailer");
+        super.payTax();
+        double age= 2024-year;
+
+        obj.getID();
+        obj.getVAT();
+        obj.getWHT();
+        obj.getIL();
+        obj.getSD();
+        obj.getFF();
+        obj.getED();
+        obj.Registration(plate);
+        if(grossWeight>15000 && grossWeight<20000){
+            double a =CIF * 0.15;
+            System.out.println("Weight tax: "+a);
+            tax+=a;
+
+
+        } else if (grossWeight>20000) {
+            double a =CIF * 0.25;
+            System.out.println("Weight tax: "+a);
+            tax+=a;
+
+        }else if(grossWeight<15000){
+            double a = CIF *0.05;
+            System.out.println("Weight tax: "+a);
+            tax+=a;
+
+        }if(engineCapacity>20000){
+            double a = CIF *0.1;
+            System.out.println("Engine capacity: "+a);
+            tax+=a;
+        }else if(engineCapacity>15000&&engineCapacity<20000) {
+            double a = CIF * 0.05;
+            System.out.println("Engine capacity: " + a);
+            tax += a;
+        }else if(engineCapacity<15000){
+                double a = CIF *0.025;
+                System.out.println("Engine capacity: "+a);
+                tax+=a;
+            }
+        if(age<5){
+            double a = CIF *0.015;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }else if(age>5&& age<10){
+            double a = CIF *0.05;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }else if(age>10&& age<15){
+            double a = CIF *0.1;
+            System.out.println("Add ons for Infrastructure Levy: "+a);
+            tax+=a;
+
+        }
+
+        System.out.println("Total:"+tax);
+        System.out.println();
+
+
+
+    }
+}
+public class Other extends Vehicles{
+    public String plate;
+    public Other(double CIF, double seatingCapacity, double grossWeight, double engineCapacity, double year,String plate) {
+        super(CIF, seatingCapacity, grossWeight, engineCapacity, year);
+        this.plate=plate;
+    }
+
+    @Override
+    public void payTax(Vehicles obj) {
+        System.out.println("Other vehicle");
+        super.payTax();
+        obj.getID();
+        obj.getVAT();
+        obj.getWHT();
+        obj.getIL();
+        obj.getSD();
+        obj.getFF();
+        obj.getED();
+        obj.Registration(plate);
+        System.out.println("Total:"+tax);
+        System.out.println();
+
+
+
+    }
+}
+public class Main {
+
+    public static void main(String[] args) {
+     Ambulance a1 = new Ambulance(40000,7,30000,3455,2022);
+     a1.payTax(a1);
+
+
+     Sedan s1= new Sedan(850000,8,1800,2500,2018);
+     s1.payTax(s1);
+
+
+     Other o4 = new Other(90000,6,800,4600,2019,"B");
+     o4.bond(4);
+     o4.payTax(o4);
+
+     SUV h3 = new SUV(900000,9,4000,1600,2020);
+     h3.bond(5);
+     h3.transportation(1);
+     h3.payTax(h3);
+
+     Trailer r4 = new Trailer(67000,13,90000,20000,2021,"B");
+     r4.bond(3);
+     r4.transportation(2);
+     r4.payTax(r4);
+
+     Estate e7= new Estate(89000,12,80000,3400,2017,"A");
+     e7.bond(9);
+     e7.transportation(1);
+     e7.payTax(e7);
+
+
+
+
+    }
+}
+
